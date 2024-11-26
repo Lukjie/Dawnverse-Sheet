@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Dawnverse Character Sheet</title>
+    <style>
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat&display=swap');
+
+        /* General Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: #ffcc00; /* Gold color */
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        /* Container Styles */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #000; /* Black background */
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            z-index: 1;
+            border: 2px solid #ffcc00; /* Gold border */
+        }
+        /* Tab Styles */
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ffcc00; /* Gold border */
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .tab button {
+            background-color: #111; /* Dark background */
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 18px;
+            color: #fff; /* White text */
+            flex: 1;
+            font-family: 'Cinzel', serif;
+        }
+        .tab button:hover {
+            background-color: #333;
+        }
+        .tab button.active {
+            background-color: #444;
+            color: #ffcc00; /* Gold text */
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+        }
+        /* Section Styles */
+        .section {
+            border: 1px solid #ffcc00; /* Gold border */
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #111; /* Dark background */
+            position: relative;
+            border-radius: 5px;
+        }
+        .section h2 {
+            margin-top: 0;
+            background-color: #222; /* Darker background */
+            padding: 10px;
+            color: #ffcc00; /* Gold text */
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffcc00; /* Gold */
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], select, textarea, input[type="file"], input[type="checkbox"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background-color: #333; /* Dark background */
+            color: #fff; /* White text */
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        .attributes, .abilities, .equipment, .skills, .saves {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .attributes div, .abilities div, .equipment div, .skills div, .saves div {
+            flex: 1 1 48%;
+            margin-bottom: 20px;
+        }
+        .abilities div, .equipment div {
+            flex: 1 1 100%;
+        }
+        .skills div, .saves div {
+            flex: 1 1 100%;
+            margin-bottom: 10px;
+        }
+        .skills h3 {
+            width: 100%;
+            margin-top: 20px;
+            color: #ffcc00;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffcc00; /* Gold */
+            border: none;
+            color: #000; /* Black text */
+            font-size: 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+        }
+        .submit-btn:hover {
+            background-color: #e6b800;
+        }
+        /* Header Image */
+        .header-image {
+            width: 100%;
+            height: 300px;
+            background: url('https://i.postimg.cc/v8LdwHRN/IMG-3372.jpg') no-repeat center center;
+            background-size: cover;
+            margin-bottom: 0;
+            border-bottom: 2px solid #ffcc00; /* Gold border */
+            border-radius: 10px 10px 0 0;
+        }
+        /* Light Side Tab Styles */
+        .light-tab {
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            min-height: 400px;
+            position: relative;
+            padding: 20px;
+        }
+        .light-tab h1 {
+            color: #ffcc00; /* Gold */
+        }
+        .light-tab label {
+            color: #ffcc00; /* Gold */
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+        }
+        .light-tab input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        /* Dark Side Tab Styles */
+        .dark-tab {
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            min-height: 400px;
+            position: relative;
+            padding: 20px;
+        }
+        .dark-tab h1 {
+            color: #ffcc00; /* Gold */
+        }
+        .dark-tab label {
+            color: #ffcc00; /* Gold */
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+        }
+        .dark-tab input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        /* Skill Row Styles */
+        .skill-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .skill-name {
+            flex: 1;
+            color: #ffcc00; /* Gold */
+            min-width: 120px;
+        }
+        .skill-checkbox, .skill-bonus {
+            margin-right: 10px;
+        }
+        .skill-checkbox label {
+            font-weight: normal;
+            color: #fff;
+        }
+        .skill-bonus input {
+            width: 60px;
+            padding: 5px;
+            background-color: #333;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 5px;
+        }
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .attributes div, .abilities div, .equipment div, .skills div, .saves div {
+                flex: 1 1 100%;
+            }
+            .container {
+                padding: 10px;
+            }
+            .tab button {
+                font-size: 16px;
+            }
+            .header-image {
+                height: 200px;
+            }
+            .light-tab label, .dark-tab label {
+                font-size: 18px;
+            }
+            .skill-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .skill-checkbox, .skill-bonus {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Remove the active class from all tabs
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab and add an active class to the button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Open the Character Sheet tab by default and load data
+        window.onload = function() {
+            document.getElementById("defaultOpen").click();
+            loadCharacterData();
+        }
+
+        // Save character data to localStorage and allow sharing
+        function saveCharacterData() {
+            var form = document.getElementById('character-form');
+            var forceForm = document.getElementById('force-form');
+            var techForm = document.getElementById('tech-form');
+            var equipmentForm = document.getElementById('equipment-form');
+            var backgroundForm = document.getElementById('background-form');
+            var notesForm = document.getElementById('notes-form');
+            var forms = [form, forceForm, techForm, equipmentForm, backgroundForm, notesForm];
+            var data = {};
+
+            // Collect data from all forms
+            forms.forEach(function(frm) {
+                if (frm) {
+                    var formData = new FormData(frm);
+                    formData.forEach(function(value, key) {
+                        data[key] = value;
+                    });
+                }
+            });
+
+            // Save data to localStorage
+            localStorage.setItem('dawnverseCharacterData', JSON.stringify(data));
+
+            // Create a data URL for sharing
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            var fileName = data['character-name'] ? data['character-name'].replace(/\s+/g, '_') : 'character';
+            downloadAnchorNode.setAttribute("download", fileName + ".json");
+            document.body.appendChild(downloadAnchorNode); // Required for Firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        // Load character data from localStorage
+        function loadCharacterData() {
+            var savedData = localStorage.getItem('dawnverseCharacterData');
+            if (savedData) {
+                var data = JSON.parse(savedData);
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var field = document.querySelector('[name="' + key + '"]');
+                        if (field) {
+                            if (field.type === 'checkbox') {
+                                field.checked = data[key] === 'on' ? true : false;
+                            } else {
+                                field.value = data[key];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Function to import character data from a JSON file
+        function importCharacterData(event) {
+            var file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var contents = e.target.result;
+                var data = JSON.parse(contents);
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var field = document.querySelector('[name="' + key + '"]');
+                        if (field) {
+                            if (field.type === 'checkbox') {
+                                field.checked = data[key] === 'on' ? true : false;
+                            } else {
+                                field.value = data[key];
+                            }
+                        }
+                    }
+                }
+                // Save imported data to localStorage
+                localStorage.setItem('dawnverseCharacterData', JSON.stringify(data));
+                alert('Character data imported successfully!');
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Image -->
+        <div class="header-image"></div>
+
+        <!-- Tab Navigation -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'CharacterSheet')" id="defaultOpen">Character Sheet</button>
+            <button class="tablinks" onclick="openTab(event, 'ForcePowers')">Force Powers</button>
+            <button class="tablinks" onclick="openTab(event, 'TechPowers')">Tech Powers</button>
+            <button class="tablinks" onclick="openTab(event, 'EquipmentCurrency')">Equipment & Currency</button>
+            <button class="tablinks" onclick="openTab(event, 'BackgroundNotes')">Background & Notes</button>
+            <button class="tablinks" onclick="openTab(event, 'LightSide')">Light Side</button>
+            <button class="tablinks" onclick="openTab(event, 'DarkSide')">Dark Side</button>
+            <button class="tablinks" onclick="openTab(event, 'Notes')">Notes</button>
+        </div>
+
+        <!-- Character Sheet Content -->
+        <div id="CharacterSheet" class="tabcontent">
+            <h1>The Dawnverse Character Sheet</h1>
+            <form id="character-form">
+                <!-- Character Information Section -->
+                <div class="section">
+                    <h2>Character Information</h2>
+                    <label for="character-name">Character Name</label>
+                    <input type="text" id="character-name" name="character-name">
+
+                    <label for="player-name">Player Name</label>
+                    <input type="text" id="player-name" name="player-name">
+
+                    <label for="class">Class</label>
+                    <input type="text" id="class" name="class">
+
+                    <label for="level">Level</label>
+                    <input type="number" id="level" name="level" min="1" max="20">
+
+                    <label for="background">Background</label>
+                    <input type="text" id="background" name="background">
+
+                    <label for="species">Species</label>
+                    <input type="text" id="species" name="species">
+
+                    <label for="alignment">Alignment</label>
+                    <input type="text" id="alignment" name="alignment">
+
+                    <label for="experience">Experience Points (XP)</label>
+                    <input type="number" id="experience" name="experience">
+                </div>
+
+                <!-- Ability Scores and Modifiers Section -->
+                <div class="section">
+                    <h2>Ability Scores and Modifiers</h2>
+                    <div class="attributes">
+                        <!-- Strength -->
+                        <div>
+                            <label for="strength-score">Strength Score</label>
+                            <input type="number" id="strength-score" name="strength-score" min="1" max="30">
+                            <label for="strength-mod">Strength Modifier</label>
+                            <input type="number" id="strength-mod" name="strength-mod" min="-5" max="+10">
+                        </div>
+                        <!-- Dexterity -->
+                        <div>
+                            <label for="dexterity-score">Dexterity Score</label>
+                            <input type="number" id="dexterity-score" name="dexterity-score" min="1" max="30">
+                            <label for="dexterity-mod">Dexterity Modifier</label>
+                            <input type="number" id="dexterity-mod" name="dexterity-mod" min="-5" max="+10">
+                        </div>
+                        <!-- Constitution -->
+                        <div>
+                            <label for="constitution-score">Constitution Score</label>
+                            <input type="number" id="constitution-score" name="constitution-score" min="1" max="30">
+                            <label for="constitution-mod">Constitution Modifier</label>
+                            <input type="number" id="constitution-mod" name="constitution-mod" min="-5" max="+10">
+                        </div>
+                        <!-- Intelligence -->
+                        <div>
+                            <label for="intelligence-score">Intelligence Score</label>
+                            <input type="number" id="intelligence-score" name="intelligence-score" min="1" max="30">
+                            <label for="intelligence-mod">Intelligence Modifier</label>
+                            <input type="number" id="intelligence-mod" name="intelligence-mod" min="-5" max="+10">
+                        </div>
+                        <!-- Wisdom -->
+                        <div>
+                            <label for="wisdom-score">Wisdom Score</label>
+                            <input type="number" id="wisdom-score" name="wisdom-score" min="1" max="30">
+                            <label for="wisdom-mod">Wisdom Modifier</label>
+                            <input type="number" id="wisdom-mod" name="wisdom-mod" min="-5" max="+10">
+                        </div>
+                        <!-- Charisma -->
+                        <div>
+                            <label for="charisma-score">Charisma Score</label>
+                            <input type="number" id="charisma-score" name="charisma-score" min="1" max="30">
+                            <label for="charisma-mod">Charisma Modifier</label>
+                            <input type="number" id="charisma-mod" name="charisma-mod" min="-5" max="+10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proficiency Bonus and Saving Throws -->
+                <div class="section">
+                    <h2>Proficiencies and Saving Throws</h2>
+                    <label for="proficiency-bonus">Proficiency Bonus</label>
+                    <input type="number" id="proficiency-bonus" name="proficiency-bonus" min="0" max="+6">
+
+                    <div class="saves">
+                        <!-- Strength Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-strength"> Strength Save</label>
+                        </div>
+                        <!-- Dexterity Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-dexterity"> Dexterity Save</label>
+                        </div>
+                        <!-- Constitution Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-constitution"> Constitution Save</label>
+                        </div>
+                        <!-- Intelligence Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-intelligence"> Intelligence Save</label>
+                        </div>
+                        <!-- Wisdom Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-wisdom"> Wisdom Save</label>
+                        </div>
+                        <!-- Charisma Save -->
+                        <div>
+                            <label><input type="checkbox" name="save-charisma"> Charisma Save</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="section">
+                    <h2>Skills</h2>
+                    <div class="skills">
+                        <!-- Strength Skills -->
+                        <h3>Strength</h3>
+                        <div class="skill-row">
+                            <div class="skill-name">Athletics</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-athletics-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-athletics-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-athletics-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <!-- Dexterity Skills -->
+                        <h3>Dexterity</h3>
+                        <div class="skill-row">
+                            <div class="skill-name">Acrobatics</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-acrobatics-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-acrobatics-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-acrobatics-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Sleight of Hand</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-sleight-of-hand-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-sleight-of-hand-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-sleight-of-hand-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Stealth</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-stealth-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-stealth-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-stealth-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <!-- Intelligence Skills -->
+                        <h3>Intelligence</h3>
+                        <div class="skill-row">
+                            <div class="skill-name">Investigation</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-investigation-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-investigation-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-investigation-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Lore</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-lore-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-lore-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-lore-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Nature</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-nature-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-nature-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-nature-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Piloting</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-piloting-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-piloting-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-piloting-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Technology</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-technology-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-technology-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-technology-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <!-- Wisdom Skills -->
+                        <h3>Wisdom</h3>
+                        <div class="skill-row">
+                            <div class="skill-name">Animal Handling</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-animal-handling-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-animal-handling-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-animal-handling-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Insight</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-insight-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-insight-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-insight-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Medicine</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-medicine-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-medicine-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-medicine-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Perception</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-perception-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-perception-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-perception-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Survival</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-survival-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-survival-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-survival-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Magick</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-magick-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-magick-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-magick-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <!-- Charisma Skills -->
+                        <h3>Charisma</h3>
+                        <div class="skill-row">
+                            <div class="skill-name">Deception</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-deception-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-deception-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-deception-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Intimidation</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-intimidation-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-intimidation-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-intimidation-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Performance</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-performance-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-performance-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-performance-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                        <div class="skill-row">
+                            <div class="skill-name">Persuasion</div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-persuasion-proficient"> Proficient</label>
+                            </div>
+                            <div class="skill-checkbox">
+                                <label><input type="checkbox" name="skill-persuasion-expertise"> Expertise</label>
+                            </div>
+                            <div class="skill-bonus">
+                                <input type="number" name="skill-persuasion-bonus" placeholder="Bonus">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Combat Statistics Section -->
+                <div class="section">
+                    <h2>Combat Statistics</h2>
+                    <div class="attributes">
+                        <div>
+                            <label for="armor-class">Armor Class (AC)</label>
+                            <input type="number" id="armor-class" name="armor-class" min="0" max="30">
+                        </div>
+                        <div>
+                            <label for="initiative">Initiative</label>
+                            <input type="number" id="initiative" name="initiative" min="-5" max="+10">
+                        </div>
+                        <div>
+                            <label for="speed">Speed</label>
+                            <input type="number" id="speed" name="speed" min="0" max="120">
+                        </div>
+                        <div>
+                            <label for="passive-perception">Passive Perception</label>
+                            <input type="number" id="passive-perception" name="passive-perception" min="0" max="30">
+                        </div>
+                        <div>
+                            <label for="hit-points">Hit Points (HP)</label>
+                            <input type="number" id="hit-points" name="hit-points">
+                        </div>
+                        <div>
+                            <label for="temp-hit-points">Temporary Hit Points</label>
+                            <input type="number" id="temp-hit-points" name="temp-hit-points">
+                        </div>
+                        <div>
+                            <label for="hit-dice">Hit Dice</label>
+                            <input type="text" id="hit-dice" name="hit-dice">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unique Skills Section -->
+                <div class="section">
+                    <h2>Unique Skills</h2>
+                    <div class="abilities">
+                        <div>
+                            <label for="unique-skills">List your unique skills here</label>
+                            <textarea id="unique-skills" name="unique-skills" placeholder="E.g., Lightsaber mastery, Force healing..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resistances & Immunities Section -->
+                <div class="section">
+                    <h2>Resistances & Immunities</h2>
+                    <div class="abilities">
+                        <div>
+                            <label for="resistances-immunities">List your resistances and immunities here</label>
+                            <textarea id="resistances-immunities" name="resistances-immunities" placeholder="E.g., Resistance to fire damage, immune to poison..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features and Traits Section -->
+                <div class="section">
+                    <h2>Features and Traits</h2>
+                    <div class="abilities">
+                        <div>
+                            <label for="class-features">Class Features</label>
+                            <textarea id="class-features" name="class-features"></textarea>
+                        </div>
+                        <div>
+                            <label for="species-traits">Species Traits</label>
+                            <textarea id="species-traits" name="species-traits"></textarea>
+                        </div>
+                        <div>
+                            <label for="background-features">Background Features</label>
+                            <textarea id="background-features" name="background-features"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proficiencies and Languages Section -->
+                <div class="section">
+                    <h2>Proficiencies and Languages</h2>
+                    <div class="abilities">
+                        <div>
+                            <label for="armor-proficiencies">Armor Proficiencies</label>
+                            <textarea id="armor-proficiencies" name="armor-proficiencies"></textarea>
+                        </div>
+                        <div>
+                            <label for="weapon-proficiencies">Weapon Proficiencies</label>
+                            <textarea id="weapon-proficiencies" name="weapon-proficiencies"></textarea>
+                        </div>
+                        <div>
+                            <label for="tool-proficiencies">Tool Proficiencies</label>
+                            <textarea id="tool-proficiencies" name="tool-proficiencies"></textarea>
+                        </div>
+                        <div>
+                            <label for="languages">Languages</label>
+                            <textarea id="languages" name="languages"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Force and Tech Points Section -->
+                <div class="section">
+                    <h2>Force and Tech Points</h2>
+                    <div class="attributes">
+                        <div>
+                            <label for="force-points-max">Force Points Maximum</label>
+                            <input type="number" id="force-points-max" name="force-points-max" min="0">
+                        </div>
+                        <div>
+                            <label for="force-points-current">Force Points Current</label>
+                            <input type="number" id="force-points-current" name="force-points-current" min="0">
+                        </div>
+                        <div>
+                            <label for="tech-points-max">Tech Points Maximum</label>
+                            <input type="number" id="tech-points-max" name="tech-points-max" min="0">
+                        </div>
+                        <div>
+                            <label for="tech-points-current">Tech Points Current</label>
+                            <input type="number" id="tech-points-current" name="tech-points-current" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Force Alignment Section -->
+                <div class="section">
+                    <h2>Force Alignment</h2>
+                    <div class="attributes">
+                        <div>
+                            <label for="light-side-points">Light Side Points</label>
+                            <input type="number" id="light-side-points" name="light-side-points" min="0">
+                        </div>
+                        <div>
+                            <label for="dark-side-points">Dark Side Points</label>
+                            <input type="number" id="dark-side-points" name="dark-side-points" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save and Import Buttons -->
+                <button type="button" class="submit-btn" onclick="saveCharacterData()">Save Character Sheet</button>
+                <label for="import-file" style="margin-top: 15px; display: block; color: #ffcc00;">Import Character Sheet</label>
+                <input type="file" id="import-file" accept=".json" onchange="importCharacterData(event)">
+            </form>
+        </div>
+
+        <!-- Force Powers Content -->
+        <div id="ForcePowers" class="tabcontent">
+            <h1>Force Powers</h1>
+            <form id="force-form">
+                <!-- At-Will Powers -->
+                <div class="section">
+                    <h2>At-Will Powers</h2>
+                    <textarea name="force-at-will" placeholder="List your At-Will Force Powers here..."></textarea>
+                </div>
+                <!-- Level 1 to 9 Powers -->
+                <!-- Level 1 Powers -->
+                <div class="section">
+                    <h2>1st Level Powers</h2>
+                    <textarea name="force-level-1" placeholder="List your 1st Level Force Powers here..."></textarea>
+                </div>
+                <!-- Levels 2 to 9 Powers -->
+                <div class="section">
+                    <h2>2nd Level Powers</h2>
+                    <textarea name="force-level-2" placeholder="List your 2nd Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>3rd Level Powers</h2>
+                    <textarea name="force-level-3" placeholder="List your 3rd Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>4th Level Powers</h2>
+                    <textarea name="force-level-4" placeholder="List your 4th Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>5th Level Powers</h2>
+                    <textarea name="force-level-5" placeholder="List your 5th Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>6th Level Powers</h2>
+                    <textarea name="force-level-6" placeholder="List your 6th Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>7th Level Powers</h2>
+                    <textarea name="force-level-7" placeholder="List your 7th Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>8th Level Powers</h2>
+                    <textarea name="force-level-8" placeholder="List your 8th Level Force Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>9th Level Powers</h2>
+                    <textarea name="force-level-9" placeholder="List your 9th Level Force Powers here..."></textarea>
+                </div>
+                <!-- Ritual Powers -->
+                <div class="section">
+                    <h2>Ritual Powers</h2>
+                    <textarea name="force-rituals" placeholder="List your Ritual Force Powers here..."></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tech Powers Content -->
+        <div id="TechPowers" class="tabcontent">
+            <h1>Tech Powers</h1>
+            <form id="tech-form">
+                <!-- At-Will Powers -->
+                <div class="section">
+                    <h2>At-Will Powers</h2>
+                    <textarea name="tech-at-will" placeholder="List your At-Will Tech Powers here..."></textarea>
+                </div>
+                <!-- Level 1 to 9 Powers -->
+                <!-- Level 1 Powers -->
+                <div class="section">
+                    <h2>1st Level Powers</h2>
+                    <textarea name="tech-level-1" placeholder="List your 1st Level Tech Powers here..."></textarea>
+                </div>
+                <!-- Levels 2 to 9 Powers -->
+                <div class="section">
+                    <h2>2nd Level Powers</h2>
+                    <textarea name="tech-level-2" placeholder="List your 2nd Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>3rd Level Powers</h2>
+                    <textarea name="tech-level-3" placeholder="List your 3rd Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>4th Level Powers</h2>
+                    <textarea name="tech-level-4" placeholder="List your 4th Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>5th Level Powers</h2>
+                    <textarea name="tech-level-5" placeholder="List your 5th Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>6th Level Powers</h2>
+                    <textarea name="tech-level-6" placeholder="List your 6th Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>7th Level Powers</h2>
+                    <textarea name="tech-level-7" placeholder="List your 7th Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>8th Level Powers</h2>
+                    <textarea name="tech-level-8" placeholder="List your 8th Level Tech Powers here..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>9th Level Powers</h2>
+                    <textarea name="tech-level-9" placeholder="List your 9th Level Tech Powers here..."></textarea>
+                </div>
+                <!-- Super Technology -->
+                <div class="section">
+                    <h2>Super Technology</h2>
+                    <textarea name="tech-super-tech" placeholder="List your Super Technology abilities here..."></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Equipment and Currency Tab -->
+        <div id="EquipmentCurrency" class="tabcontent">
+            <h1>Equipment and Currency</h1>
+            <form id="equipment-form">
+                <div class="section">
+                    <h2>Equipment</h2>
+                    <textarea name="equipment-list" placeholder="Include item names, weight, and value..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>Currency</h2>
+                    <div>
+                        <label for="republic-credits">Republic Credits</label>
+                        <input type="number" id="republic-credits" name="republic-credits" min="0">
+                    </div>
+                    <div>
+                        <label for="huttese-coins">Huttese Golden Coins</label>
+                        <input type="number" id="huttese-coins" name="huttese-coins" min="0">
+                    </div>
+                    <div>
+                        <label for="eshan-dollars">Eshan Silver Dollars</label>
+                        <input type="number" id="eshan-dollars" name="eshan-dollars" min="0">
+                    </div>
+                    <div>
+                        <label for="cartel-coins">Cartel Coins</label>
+                        <input type="number" id="cartel-coins" name="cartel-coins" min="0">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Background and Notes Tab -->
+        <div id="BackgroundNotes" class="tabcontent">
+            <h1>Background and Notes</h1>
+            <form id="background-form">
+                <div class="section">
+                    <h2>Personality Traits</h2>
+                    <textarea id="personality-traits" name="personality-traits"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Ideals</h2>
+                    <textarea id="ideals" name="ideals"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Bonds</h2>
+                    <textarea id="bonds" name="bonds"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Flaws</h2>
+                    <textarea id="flaws" name="flaws"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Allies and Organizations</h2>
+                    <textarea id="allies-organizations" name="allies-organizations"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Backstory</h2>
+                    <textarea id="backstory" name="backstory"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Additional Features and Abilities</h2>
+                    <textarea id="additional-features" name="additional-features"></textarea>
+                </div>
+                <div class="section">
+                    <h2>Treasure</h2>
+                    <textarea id="treasure" name="treasure"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Light Side Content -->
+        <div id="LightSide" class="tabcontent light-tab">
+            <h1>The Light Side</h1>
+            <img src="https://i.postimg.cc/hGXRx95J/the-jedi-code-by-phoenix-senpai-d6gibom.jpg" alt="The Jedi Code" style="width:100%; border-radius:5px;">
+            <label><input type="checkbox" name="light-side"> I serve the Light of the Force.</label>
+        </div>
+
+        <!-- Dark Side Content -->
+        <div id="DarkSide" class="tabcontent dark-tab">
+            <h1>The Dark Side</h1>
+            <img src="https://i.postimg.cc/VkCZqDFb/wp10326445.png" alt="The Sith Code" style="width:100%; border-radius:5px;">
+            <label><input type="checkbox" name="dark-side"> The Force will serve my darkness.</label>
+        </div>
+
+        <!-- Notes Content -->
+        <div id="Notes" class="tabcontent">
+            <h1>Notes</h1>
+            <form id="notes-form">
+                <div class="section">
+                    <h2>Notes</h2>
+                    <textarea id="notes" name="notes" placeholder="Write your notes here..." style="height:400px;"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
